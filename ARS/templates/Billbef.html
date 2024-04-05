@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flight Booking Form</title>
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Flight Booking Form</h1>
+    <form id="bookingForm" action="/download" method="post">
+      {%for i in a%}
+      <!-- Flight Details -->
+      <div class="form-group">
+        
+          <div class="mb-3">
+            <label  class="form-label">Departure City:</label>
+            <input type="text"  class="form-control" name="depc" value="{{i[0]|safe}}" readonly>
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Arrival City:</label>
+            <input type="text"  class="form-control" name="arc" value="{{i[1]|safe}}" readonly>
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Flight ID:</label>
+            <input type="text"  class="form-control" name="id" value="{{i[3]|safe}}" readonly>
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Stops:</label>
+            <input type="text"  class="form-control" placeholder="{{i[4]|safe}}" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Departure Date:</label>
+            <input type="date"  class="form-control" name="depdatee" placeholder="{{i[5]|safe}}" readonly>
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Class:</label>
+            <input type="text" name="class" readonly  class="form-control" value="{{i[6]|safe}}">
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Passenger Details -->
+      <h3>Passenger Details</h3>
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name">
+      </div>
+      <div class="form-group">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" name="dob" class="form-control" id="dob" max="2024-04-10">
+      </div>
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" class="form-control" name="age" id="age" placeholder="Enter Age">
+      </div>
+      <div class="form-group">
+        <label for="email">Email id:</label>
+        <input type="email" name="email" class="form-control" id="email">
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile Number:</label>
+        <input type="tel" name="mobile" class="form-control" id="mobile">
+      </div>
+
+      <!-- Additional Amenities -->
+      <h3>Additional Amenities</h3>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="amenities" id="option1" value="wifi">
+        <label class="form-check-label" for="option1">
+          Wifi (+300)
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="amenities" id="option2" value="meal">
+        <label class="form-check-label" for="option2">
+          Meal (+200)
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="amenities" id="option3" value="extraBaggage">
+        <label class="form-check-label" for="option3">
+          Extra Baggage (+1000)
+        </label>
+      </div>
+
+      <!-- Ticket Price Calculation -->
+      <h3>Ticket Price</h3>
+      <div class="form-group">
+        <label for="originalPrice">Original Ticket Price:</label>
+        <input type="number" name="price" class="form-control" id="originalPrice" value="{{i[2]|safe}}" readonly>
+      </div>
+      <div class="form-group">
+        <label for="finalPrice">Final Ticket Price:</label>
+        <input type="number" name="price1" class="form-control" id="finalPrice" readonly>
+      </div>
+      <div class="form-group">
+        <label for="totalPrice">Total Ticket Price:</label>
+        <input type="number" name="price2" class="form-control" id="totalPrice" readonly>
+      </div>
+      <input type="hidden" id="resultInput" name="resultInput">
+      <input type="hidden" name="Passcount" id="Passcount" placeholder="{{i[7]|safe}}">
+
+      <!-- Submit Button -->
+      
+      <button type="button" class="btn btn-primary" onclick="calculatePrice()">Calculate Total Price</button>
+      <input type="submit" value="Book" class="btn btn-primary">
+    </form>
+    {%endfor%}
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function calculatePrice() {
+  var originalPrice = parseFloat(document.getElementById('originalPrice').value);
+  var wifiChecked = document.getElementById('option1').checked;
+  var mealChecked = document.getElementById('option2').checked;
+  var extraBaggageChecked = document.getElementById('option3').checked;
+  var Passcount = parseInt(document.getElementById('Passcount').placeholder); // No need to redeclare
+
+  var totalPrice = originalPrice;
+  var finalPrice = originalPrice;
+
+  if (wifiChecked) {
+    finalPrice += 300 * Passcount; // Multiply additional cost by Passcount
+  }
+  if (mealChecked) {
+    finalPrice += 200 * Passcount; // Multiply additional cost by Passcount
+  }
+  if (extraBaggageChecked) {
+    finalPrice += 1000 * Passcount; // Multiply additional cost by Passcount
+  }
+
+  var totalPriceWithTax = finalPrice * 0.09 + finalPrice;
+
+  document.getElementById('finalPrice').value = finalPrice.toFixed(2);
+  document.getElementById('totalPrice').value = totalPriceWithTax.toFixed(2);
+  document.getElementById('resultInput').value = totalPriceWithTax.toFixed(2);
+}
+
+  </script>
+</body>
+</html>

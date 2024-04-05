@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flight Ticket</title>
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+       @media print {
+        .btn {
+            display: none;
+        }
+    }
+    /* Styles specific to this page */
+    .ticket-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Styles for the ticket details */
+    .ticket-details {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
+    /* Styles for the button */
+    .btn-download {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+    <form action="/Pay">
+    <div class="ticket-container">
+        <div class="ticket-details">
+            <h1 class="text-center mb-4">Ahar Air Flight Ticket</h1>
+          <!-- Ticket details -->
+            <div class="row">
+                <div class="col-md-6">
+                    {%for i in processed_row%}  
+                    <p><strong>Name:</strong>{{i[0]|safe}}</p>
+                    <p><strong>Date of Birth:</strong>{{i[3]|safe}} </p>
+                    <p><strong>Mobile Number:</strong>{{i[2]|safe}} </p>
+                    <p><strong>Email ID:</strong>{{i[1]|safe}} </p>
+                    <p><strong>Departure City::</strong>{{i[9]|safe}} </p>
+                    <p><strong>Arrival City::</strong>{{i[10]|safe}} </p>
+                    <p><strong>Departure Date:</strong>{{i[8]|safe}} </p>
+                    <p><strong>Flight ID:</strong>{{i[11]|safe}} </p>
+                    
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <p><strong>Class:</strong>{{i[12]|safe}}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Ticket Price:</strong>{{i[6]|safe}}</p>
+                </div>
+            </div>
+        </div>
+        {%endfor%} 
+              <!-- Button to download -->
+        <button type="submit" onclick="return printOrDownload()">Download</button>
+    </form>
+    
+    </div>
+
+    <!-- Bootstrap JS and jQuery (required for Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function printOrDownload() {
+            window.print(); // This will open the browser's print dialog
+        }
+    </script>
+</body>
+</html>

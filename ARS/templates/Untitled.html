@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahar Airways</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add this to your existing CSS */
+        .table-transparent {
+            background-color: rgba(255, 255, 255, 1); /* White color with full opacity by default */
+            transition: background-color 0.3s ease; /* Smooth transition for background color change */
+        }
+
+        .table-transparent:hover {
+            background-color: rgba(255, 255, 255, 0.5); /* White color with 50% opacity on hover */
+        }
+        
+        .form:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        form {
+            color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <header>
+        <img class="above-navbar" src="\static\back.png" alt="Image Above Navbar" style="width: 100vw;height: 150px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning" style="padding-top: 2px;">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#book">Book a Flight<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#aboutus">About Us</a>
+                <a class="nav-item nav-link" href="#fleet">Fleet Details</a>
+                <a class="nav-item nav-link" href="#safety-connectivity">Connectivity</a>
+              </div>
+            </div>
+          </nav>
+    </header>
+     
+    <section id="book" class="cont" style="background-image: url(https://wallpapers.com/images/featured/plane-background-etxz0fp95slobqec.webp); background-repeat: no-repeat; background-size: cover; background-position: center;padding: 50px;">
+        <div class="container">
+            <form method="post" action="/" onsubmit="return validateForm()"  class="form" style="padding: 20px;border-radius: 50px; border: 2px solid rgba(255, 255, 255, 0.5); transition: background-color 0.3s;">
+                
+                <header style="text-align: center; font-size: larger; border-bottom: 2px solid white; background-image: linear-gradient(to left, white, blue); margin-bottom: 20px;"><b>BOOK A FLIGHT</b></header>
+                <div class="form-group" style="align-items: center;justify-content: center;text-align: center;">
+                    <input type="radio" value="trip" id="trip" name="trips" onclick="toggleInput('trip')">
+                    <label for="trip">One-Way</label>
+                    <input type="radio" value="trips" name="trips" id="trips" onclick="toggleInput('trips')">
+                    <label for="trips">Two-Way</label>
+                    <input type="radio" name="tripss" id="multistop" value="multistop" onclick="toggleTripOption('multistop')">
+                    <label for="multistop">Multistop</label>
+                    <input type="radio" name="tripss" id="nonstop" value="nonstop" onclick="toggleTripOption('nonstop')">
+                    <label for="nonstop">Nonstop</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        
+                        <div class="form-group">
+                            <label for="Dep">Departure City:</label>
+                            <input type="text" class="form-control" name="Dep" id="Dep">
+                        </div>
+                        <div class="form-group">
+                            <label for="stops">Stops:</label>
+                            <button type="button" class="btn btn-primary" id="stops" onclick="addStop()">Add Stop</button>
+                            <div id="stops-container"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Arr">Arrival City:</label>
+                            <input type="text" class="form-control" name="Arr" id="Arr">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Depdate">Departure Date:</label>
+                            <input type="date" class="form-control" id="Depdate">
+                        </div>
+                        <div class="form-group">
+                            <label for="Arrdat">Return Date:</label>
+                            <input type="date" class="form-control" id="Arrdat">
+                        </div>
+                        <div class="form-group">
+                            <label for="Passe">Passengers:</label>
+                            <input type="number"  name="Passe" class="form-control" id="Passe">
+                        </div>
+                        <div class="form-group">
+                            <label for="class">Choose your Class:</label>
+                            <select name="Class" class="form-control" id="class">
+                                <option name="Economy" value="Economy">Economy Class</option>
+                                <option name="Business" value="Business">Business Class</option>
+                                <option name="First" value="First">First Class</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Search Flight</button>
+                    <button type="reset" class="btn btn-secondary">Clear</button>   
+                </div><center>
+
+                    
+                    <p style="color: red;">{{failmsg|safe}}</p>
+                </center>
+                <!-- Error message display -->
+                <div id="error-message" style="display: none; color: red; text-align: center;"></div>
+
+            </form> 
+            <form action="\Modif" class="form">
+                <button class="btn btn-primary" type="submit">Modify</button>
+            </form>
+              
+        </div>
+    </section> 
+    
+    <section id="aboutus" class="py-5 bg-primary text-white" style="font-size: xx-large;background-image: url();">
+        <div class="container">
+            <h2>Welcome aboard Ahar Airways!</h2>
+            <p>Your preferred choice for budget-friendly air travel from Ahar Private Airport. Your preferred choice for budget-friendly air travel from Ahar Private Airport.<br>To revolutionize affordable air travel by providing safe, reliable, and convenient flights, enabling individuals to explore the world and connect with loved ones, while contributing to economic growth and environmental sustainability.</p>
+            <ul>
+                <li>Cultivating a culture of innovation to enhance the passenger experience and optimize resources.</li>
+                <li>Offering affordable air travel options without compromising safety or comfort.</li>
+                <li>Prioritizing sustainability by minimizing our environmental impact through responsible practices and efficient operations.</li>
+                <li>Building strong community relationships by supporting local economies and initiatives.</li>
+                <li>Embracing technology to streamline processes and improve operational efficiency.</li>
+                <li>Upholding the highest standards of safety and reliability in all aspects of our operations.</li>
+                <li>Continuously improving our services based on customer feedback and industry best practices.</li>
+                <li>Expanding strategically to connect underserved communities and provide convenient travel options.</li>
+            </ul>
+            <!-- Add other about us content as needed -->
+        </div>
+    </section>
+
+    <section id="fleet" class="py-5 bg-dark text-white" >
+        
+        <div class="container">
+            <h2>Fleet Details</h2>
+            <p><b>
+                With a fleet of three modern aircraft, including two Airbus A320s and one Boeing 777-200, we are committed to providing convenient and affordable flights to a diverse range of destinations.</p>
+            </b>
+            <table class="table table-bordered table-transparent table-hover" >
+                <thead>
+                    <tr class="bg-warning text-black" >
+                        <th scope="col">Aircraft</th>
+                        <th scope="col">First Class</th>
+                        <th scope="col">Business Class</th>
+                        <th scope="col">Economy Class</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-secondary text-white">
+                    <tr>
+                        <td>Airbus A320 (No First Class)</td>
+                        <td></td>
+                        <td>30</td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td>Airbus A320 (With First Class)</td>
+                        <td>12</td>
+                        <td>24</td>
+                        <td>144</td>
+                    </tr>
+                    <tr>
+                        <td>Boeing 777-200</td>
+                        <td>40</td>
+                        <td>60</td>
+                        <td>100</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Add other fleet details content as needed -->
+        </div>
+   
+    </section>
+
+    <section id="safety-connectivity" class="py-5 text-white" style="background-image: url(https://w.wallhaven.cc/full/73/wallhaven-73rd79.png);background-size: cover;background-repeat: no-repeat;background-position: center;">
+        <div class="container" style="font-size: xx-large;">
+            <h2 style="color: #b9b5df;">Safety and Connectivity</h2>
+            <p>At Ahar Airways, we understand the importance of accessibility and connectivity. That's why we've meticulously crafted our route network to include eight exciting destinations, ensuring that our passengers can easily reach their desired locations.</p>
+            <p>Safety, comfort, and exceptional service are at the core of everything we do. Our dedicated team works tirelessly to ensure that every journey with us is smooth, enjoyable, and memorable.</p>
+            <p>Moreover, Ahar Airways takes pride in its strong alliance relationships with reputable airlines. These partnerships allow us to offer our passengers access to a wider global network, seamless connections, and additional travel benefits.</p>
+            <p>Whether you're traveling for business or leisure, Ahar Airways is here to make your journey hassle-free and delightful. Experience the joy of flying with us and discover why we're the preferred choice for travelers seeking affordable yet reliable air travel.</p>
+            <!-- Add other safety and connectivity content as needed -->
+        </div>
+    </section> 
+
+    <footer id="Contact" class="bg-dark text-white text-center py-3">
+        &copy; 2024 Ahar Airways. All Rights Reserved.
+    </footer>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function toggleInput(option){
+            var Arr = document.getElementById("Arrdat");
+            if(option == 'trip'){
+                Arr.disabled = true;
+            }
+            if(option == 'trips'){
+                Arr.disabled = false;
+            }
+        }
+        
+        function toggleTripOption(option) {
+            var Arr = document.getElementById("stops");
+
+            if (option == 'nonstop') {
+                Arr.disabled = true; // Disable Arrival Date input for one-way trips
+            } 
+            if(option == 'multistop') {
+                Arr.disabled = false; // Enable Arrival Date input for two-way and multistop trips
+            }
+        }
+        
+        let stopCounter = 0;  // Counter to track added boxes
+
+function addStop() {
+    if (stopCounter >= 2) {
+        alert("You can only add up to two stops.");
+        return;  // Stop adding more boxes
+    }
+
+    var stopsContainer = document.getElementById("stops-container");
+    var stopInput = document.createElement("input");
+    stopInput.type = "text";
+    stopInput.name = "stop";
+    stopInput.placeholder = "Stop";
+    stopsContainer.appendChild(stopInput);
+
+    stopCounter++;  // Increment the counter after adding a box
+}
+        function validateForm() {
+    var passs = document.getElementById("Passe").value;
+    var depd = document.getElementById("Depdate").value;
+    var arrd = document.getElementById("Arrdat").value;
+    // var depc = document.getElementById("Dep").value;
+    // var arrc = document.getElementById("Arr").value;
+    var tripType = document.querySelector('input[name="trips"]:checked');
+
+    // Get current date
+    var currentDate = new Date().toISOString().split('T')[0];
+
+    // Check if any field is empty
+    if (passs === "" || depd === "" || !tripType) {
+        document.getElementById("error-message").innerText = "Please fill all necessary fields and select trip type";
+        document.getElementById("error-message").style.display = "block";
+        return false; // Prevent form submission
+    } else if (tripType.value === "trips" && arrd === "") {
+        document.getElementById("error-message").innerText = "Please fill return date";
+        document.getElementById("error-message").style.display = "block";
+        return false; // Prevent form submission
+    } else if (tripType.value === "trips" && arrd <= depd) {
+        document.getElementById("error-message").innerText = "Return date must be later than departure date";
+        document.getElementById("error-message").style.display = "block";
+        return false; // Prevent form submission
+    } else if (depd < currentDate || (tripType.value === "trips" && arrd < currentDate)) {
+        document.getElementById("error-message").innerText = "Please select a future date";
+        document.getElementById("error-message").style.display = "block";
+        return false; // Prevent form submission
+    } else {
+        document.getElementById("error-message").style.display = "none";
+        // If all fields are filled and return date is later than departure date, return true to allow form submission
+        return true;
+    }
+}
+function reloadpage(){
+    location.reload();
+}
+window.addEventListener('pageshow',function(event){
+    if(event.persisted){
+        reloadpage();
+    }
+    
+});
+    </script>
+</body>
+</html>
